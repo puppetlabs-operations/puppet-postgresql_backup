@@ -14,9 +14,8 @@ define postgresql_backup (
   $db_user,
   $db_name,
   $backup_path,
-  $group,
-  $owner,
-  $mode,
+  $group = 'root',
+  $owner = 'root'
 ) {
   case $ensure {
     present: {
