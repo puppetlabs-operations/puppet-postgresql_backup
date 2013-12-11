@@ -23,7 +23,7 @@ define postgresql_backup::db (
     group  => $group,
     owner  => $owner,
     mode   => '0755',
-    source => template('postgres_backup/postgres_backup.erb')
+    source => template('postgresql_backup/postgresql_backup.erb')
   }
 
   file { "/etc/${name}_backup.conf":
@@ -31,7 +31,7 @@ define postgresql_backup::db (
     group   => $group,
     owner   => $owner,
     mode    => '0600',
-    content => template('postgresbackup/postgres_backup.conf.erb')
+    content => template('postgresql_backup/postgresql_backup.conf.erb')
   }
 
   file { "$owner/.pgpass":
@@ -39,6 +39,6 @@ define postgresql_backup::db (
     group   => $group,
     owner   => $owner,
     mode    => '0600',
-    content => template('postgres_backup/pgpass.erb')
+    content => template('postgresql_backup/pgpass.erb')
   }
 }
