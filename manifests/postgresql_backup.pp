@@ -42,6 +42,7 @@ define postgresql_backup (
       owner   => $owner,
       mode    => '0600',
       content => template('postgres_backup/pgpass.erb')
+      }
     }
   }
 }
