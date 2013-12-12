@@ -9,7 +9,7 @@
 #   }
 #
 
-class postgresql_backup::db {
+class postgresql_backup {
   concat { $pgpass:
     owner => $owner,
     group => $group,
