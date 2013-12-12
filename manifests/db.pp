@@ -4,7 +4,7 @@
 #     db_host     => 'postgres.example.com',
 #     db_pass     => 'db pass',
 #     db_user     => 'postgres',
-#     db_title     => 'postgres',
+#     db_name     => 'postgres',
 #     backup_path => '/backups',
 #   }
 #
@@ -12,7 +12,7 @@ define postgresql_backup::db (
   $db_host,
   $db_pass,
   $db_user,
-  $db_title,
+  $db_name,
   $backup_path,
   $group  = 'root',
   $owner  = 'root',
