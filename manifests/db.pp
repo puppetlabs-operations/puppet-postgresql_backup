@@ -8,6 +8,21 @@
 #     backup_path => '/backups',
 #   }
 #
+
+class postgresql_backup::db {
+  concat { $pgpass:
+    owner => $owner,
+    group => $group,
+    mode  => '0600'
+  }
+
+  concat::fragment { 'postgresql_backup header':
+    target  => $pgpass,
+    content => "\nPuppet managed postgresql_backups. Changes made to this file will not be saved\n\n",
+    order   => '01'
+  }
+}
+
 define postgresql_backup::db (
   $db_host     = undef,
   $db_pass     = undef,
@@ -45,6 +60,6 @@ define postgresql_backup::db (
   concat::fragment { $title:
     target  => $pgpass,
     content => "${db_host}:5432:${db_name}:${db_user}:${db_pass}\n",
-    order   => '1'
+    order   => '2'
   }
 }
