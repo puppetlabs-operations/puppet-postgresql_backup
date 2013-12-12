@@ -8,24 +8,7 @@
 #     backup_path => '/backups',
 #   }
 #
-<<<<<<< HEAD
 
-class postgresql_backup {
-  concat { $pgpass:
-    owner => $owner,
-    group => $group,
-    mode  => '0600'
-  }
-
-  concat::fragment { 'postgresql_backup header':
-    target  => $pgpass,
-    content => "\nPuppet managed postgresql_backups. Changes made to this file will not be saved\n\n",
-    order   => '01'
-  }
-}
-
-=======
->>>>>>> parent of 1b12ad8... Removing init.pp. Trying to put the concat stuff outside of the define type so you don't get errors when using it more than once
 define postgresql_backup::db (
   $db_host     = undef,
   $db_pass     = undef,
@@ -37,6 +20,8 @@ define postgresql_backup::db (
   $ensure      = present,
   $pgpass      = '/root/.pgpass'
 ) {
+
+  include postgresql_backup
 
   file { "/usr/local/bin/${title}_backup":
     ensure => $ensure,
