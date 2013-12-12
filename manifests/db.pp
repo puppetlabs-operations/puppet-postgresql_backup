@@ -9,16 +9,17 @@
 #   }
 #
 define postgresql_backup::db (
-  $db_host,
-  $db_pass,
-  $db_user,
-  $db_name,
-  $backup_path,
-  $group  = 'root',
-  $owner  = 'root',
-  $ensure = present,
-  $pgpass = '/root/.pgpass',
+  $db_host     = undef,
+  $db_pass     = undef,
+  $db_user     = undef,
+  $db_name     = undef,
+  $backup_path = undef,
+  $group       = 'root',
+  $owner       = 'root',
+  $ensure      = present,
+  $pgpass      = '/root/.pgpass'
 ) {
+
   file { "/usr/local/bin/${title}_backup":
     ensure => $ensure,
     group  => $group,
@@ -43,7 +44,7 @@ define postgresql_backup::db (
 
   concat::fragment { $title:
     target  => $pgpass,
-    content => "\n${db_host}:5432:${db_name}:${db_user}:${db_pass}\n",
+    content => "${db_host}:5432:${db_name}:${db_user}:${db_pass}\n",
     order   => '1'
   }
 }
