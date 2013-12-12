@@ -35,11 +35,11 @@ define postgresql_backup::db (
     content => template('postgresql_backup/postgresql_backup.conf.erb')
   }
 
-  concat { $pgpass:
-    owner => $owner,
-    group => $group,
-    mode  => '0600'
-  }
+# concat { $pgpass:
+#   owner => $owner,
+#   group => $group,
+#   mode  => '0600'
+# }
 
   concat::fragment { $title:
     target  => $pgpass,
