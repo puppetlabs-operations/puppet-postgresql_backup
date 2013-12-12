@@ -8,6 +8,7 @@
 #     backup_path => '/backups',
 #   }
 #
+<<<<<<< HEAD
 
 class postgresql_backup {
   concat { $pgpass:
@@ -23,6 +24,8 @@ class postgresql_backup {
   }
 }
 
+=======
+>>>>>>> parent of 1b12ad8... Removing init.pp. Trying to put the concat stuff outside of the define type so you don't get errors when using it more than once
 define postgresql_backup::db (
   $db_host     = undef,
   $db_pass     = undef,
@@ -60,6 +63,6 @@ define postgresql_backup::db (
   concat::fragment { $title:
     target  => $pgpass,
     content => "${db_host}:5432:${db_name}:${db_user}:${db_pass}\n",
-    order   => '2'
+    order   => '1'
   }
 }
