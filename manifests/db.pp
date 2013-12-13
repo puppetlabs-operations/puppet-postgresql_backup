@@ -21,6 +21,15 @@ define postgresql_backup::db (
   $pgpass      = '/root/.pgpass'
 ) {
 
+  if ! defined(Concat[$pgpass]) {
+    concat { $pgpass:
+      owner  => $owner,
+      group  => $group,
+      mode   => '0600',
+      before => Concat::Fragment['postgresql_backup header']
+    }
+  }
+
   file { "/usr/local/bin/${title}_backup":
     ensure => $ensure,
     group  => $group,
@@ -35,15 +44,6 @@ define postgresql_backup::db (
     owner   => $owner,
     mode    => '0600',
     content => template('postgresql_backup/postgresql_backup.conf.erb')
-  }
-
-  if ! defined(Concat[$pgpass]) {
-    concat { $pgpass:
-      owner  => $owner,
-      group  => $group,
-      mode   => '0600',
-      before => Concat::Fragment['postgresql_backup header']
-    }
   }
 
   if ! defined(Concat::Fragment['postgresql_backup header']) {
