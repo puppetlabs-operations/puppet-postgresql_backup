@@ -21,7 +21,7 @@ function setup() {
 
 function backup_database() {
   echo "Backing up <%= @name %> database"
-  /usr/bin/pg_dump -U "${db_user}" "${db_name}" -h "${db_host}" > "${database_dump_output}"
+  /usr/bin/pg_dump -U "${db_user}" "${db_name}" -h "${db_host}" -f "${database_dump_output}"
   echo "Created ${database_dump_output}"
 }
 
