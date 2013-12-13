@@ -1,6 +1,6 @@
 #!/bin/bash
 
-config_file='<%= @name %>_backup.conf'
+config_file='/etc/<%= @name %>_backup.conf'
 timestamp=$(date +'%Y-%m-%d-%H-%M')
 
 if [ -e ${config_file} ]; then
