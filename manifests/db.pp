@@ -37,8 +37,8 @@ define postgresql_backup::db (
     content => template('postgresql_backup/postgresql_backup.conf.erb')
   }
 
-  if ! defined(File[$pgpass]) {
-    file { $pgpass:
+  if ! defined(Concat[$pgpass]) {
+    concat { $pgpass:
       owner => $owner,
       group => $group,
       mode  => '0600'
