@@ -34,7 +34,7 @@ define postgresql_backup::db (
     group  => $group,
     owner  => $owner,
     mode   => '0755',
-    source => template('postgresql_backup/postgresql_backup.erb')
+    source => template('postgresql_backup/postgresql_backup.sh.erb')
   }
 
   file { "/etc/${title}_backup.conf":
