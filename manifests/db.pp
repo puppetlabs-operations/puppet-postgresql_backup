@@ -21,8 +21,6 @@ define postgresql_backup::db (
   $pgpass      = '/root/.pgpass'
 ) {
 
-  include postgresql_backup
-
   file { "/usr/local/bin/${title}_backup":
     ensure => $ensure,
     group  => $group,
@@ -39,15 +37,25 @@ define postgresql_backup::db (
     content => template('postgresql_backup/postgresql_backup.conf.erb')
   }
 
-# concat { $pgpass:
-#   owner => $owner,
-#   group => $group,
-#   mode  => '0600'
-# }
+  if ! defined(File[$pgpass]) {
+    file { $pgpass:
+      owner => $owner,
+      group => $group,
+      mode  => '0600'
+    }
+  }
+
+  if ! defined(Concat::Fragment['postgresql_backup header']) {
+    concat::fragment { 'postgresql_backup header':
+      target  => $postgresql_backup::db::pgpass,
+      content => "\nPuppet managed postgresql_backups. Changes made to this file will not be saved\n\n",
+      order   => '1'
+    }
+  }
 
   concat::fragment { $title:
     target  => $pgpass,
     content => "${db_host}:5432:${db_name}:${db_user}:${db_pass}\n",
-    order   => '1'
+    order   => '2'
   }
 }
