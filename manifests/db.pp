@@ -37,7 +37,7 @@ define postgresql_backup::db (
     content => template('postgresql_backup/postgresql_backup.erb')
   }
 
-  file { "/etc/${title}_backup.conf":
+  file { "/etc/postgresql/9.3/main/backup/${title}_backup.conf":
     ensure  => $ensure,
     group   => $group,
     owner   => $owner,

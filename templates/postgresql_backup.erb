@@ -1,6 +1,7 @@
 #!/bin/bash
 
-config_file='/etc/<%= @name %>_backup.conf'
+confdir='/etc/postgresql/9.3/main/backup'
+config_file="${confdir}/<%= @name %>_backup.conf"
 timestamp=$(date +'%Y-%m-%d-%H-%M')
 
 if [ -e ${config_file} ]; then
@@ -18,6 +19,9 @@ function setup() {
     mkdir -p ${backup_dir}
   fi
 }
+
+function make_confdir() {
+  if [ ! -d "
 
 function backup_database() {
   echo "Backing up <%= @name %> database"
