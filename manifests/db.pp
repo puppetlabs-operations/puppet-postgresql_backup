@@ -26,7 +26,6 @@ define postgresql_backup::db (
       owner  => $owner,
       group  => $group,
       mode   => '0600',
-      before => Concat::Fragment['postgresql_backup header']
     }
   }
 
@@ -46,13 +45,13 @@ define postgresql_backup::db (
     content => template('postgresql_backup/postgresql_backup.conf.erb')
   }
 
-  if ! defined(Concat::Fragment['postgresql_backup header']) {
-    concat::fragment { 'postgresql_backup header':
-      target  => $postgresql_backup::db::pgpass,
-      content => "\nPuppet managed postgresql_backups. Changes made to this file will not be saved\n\n",
-      order   => '1'
-    }
-  }
+# if ! defined(Concat::Fragment['postgresql_backup header']) {
+#   concat::fragment { 'postgresql_backup header':
+#     target  => $postgresql_backup::db::pgpass,
+#     content => "\nPuppet managed postgresql_backups. Changes made to this file will not be saved\n\n",
+#     order   => '1'
+#   }
+# }
 
   concat::fragment { $title:
     target  => $pgpass,
