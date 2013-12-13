@@ -10,7 +10,7 @@ else
   exit 1
 fi
 
-database_dump_output="${backup_dir}/<%= @name %>-database-backup-${timestamp}.sql"
+database_dump_output="${backup_path}/<%= @name %>-database-backup-${timestamp}.sql"
 
 function setup() {
   if [ ! -d "${backup_dir}" ]; then
