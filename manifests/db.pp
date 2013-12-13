@@ -39,9 +39,10 @@ define postgresql_backup::db (
 
   if ! defined(Concat[$pgpass]) {
     concat { $pgpass:
-      owner => $owner,
-      group => $group,
-      mode  => '0600'
+      owner  => $owner,
+      group  => $group,
+      mode   => '0600',
+      before => Concat::Fragment['postgresql_backup header']
     }
   }
 
