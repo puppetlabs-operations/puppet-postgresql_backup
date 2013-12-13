@@ -30,11 +30,11 @@ define postgresql_backup::db (
   }
 
   file { "/usr/local/bin/${title}_backup":
-    ensure => $ensure,
-    group  => $group,
-    owner  => $owner,
-    mode   => '0755',
-    source => template('postgresql_backup/postgresql_backup.sh.erb')
+    ensure  => $ensure,
+    group   => $group,
+    owner   => $owner,
+    mode    => '0755',
+    content => template('postgresql_backup/postgresql_backup.erb')
   }
 
   file { "/etc/${title}_backup.conf":
