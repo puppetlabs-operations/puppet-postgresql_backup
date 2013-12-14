@@ -18,11 +18,12 @@ define postgresql_backup::db (
   $group       = 'root',
   $owner       = 'root',
   $ensure      = present,
-  $pgpass      = '/root/.pgpass'
+  $pgpass      = '/root/.pgpass',
+  $confdir     = '/etc/postgresql/9.3/main/backup'
 ) {
 
-  if ! defined(File[$backup_path]) {
-    file { $backup_path:
+  if ! defined(File[$confdir]) {
+    file { $confdir:
       ensure => directory,
       owner  => $owner,
       group  => $group,
