@@ -20,9 +20,6 @@ function setup() {
   fi
 }
 
-function make_confdir() {
-  if [ ! -d "
-
 function backup_database() {
   echo "Backing up <%= @name %> database"
   /usr/bin/pg_dump -U "${db_user}" "${db_name}" -h "${db_host}" -f "${database_dump_output}"
@@ -30,7 +27,6 @@ function backup_database() {
 }
 
 function main() {
-  echo  "Backing up <%= @name %>"
   setup
   backup_database
 }
