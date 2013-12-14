@@ -21,19 +21,20 @@ define postgresql_backup::db (
   $pgpass      = '/root/.pgpass'
 ) {
 
+  if ! defined(File[$backup_path]) {
+    file { $backup_path:
+      ensure => directory,
+      owner  => $owner,
+      group  => $group,
+      before => File["/usr/local/bin/${title}_backup"]
+    }
+  }
+
   if ! defined(Concat[$pgpass]) {
     concat { $pgpass:
       owner  => $owner,
       group  => $group,
       mode   => '0600',
-    }
-  }
-
-  if ! defined(File[$backup_path]) {
-    file { $backup_path:
-      ensure => directory,
-      owner  => $owner,
-      group  => $group
     }
   }
 
@@ -43,7 +44,7 @@ define postgresql_backup::db (
     owner   => $owner,
     mode    => '0755',
     content => template('postgresql_backup/postgresql_backup.erb')
-  }
+  } ->
 
   file { "/etc/postgresql/9.3/main/backup/${title}_backup.conf":
     ensure  => $ensure,
