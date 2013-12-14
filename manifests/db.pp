@@ -29,6 +29,14 @@ define postgresql_backup::db (
     }
   }
 
+  if ! defined(File[$backup_path]) {
+    file { $backup_path:
+      ensure => directory,
+      owner  => $owner,
+      group  => $group
+    }
+  }
+
   file { "/usr/local/bin/${title}_backup":
     ensure  => $ensure,
     group   => $group,
