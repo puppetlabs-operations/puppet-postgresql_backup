@@ -14,7 +14,7 @@ fi
 database_dump_output="${backup_path}/<%= @name %>-database-backup-${timestamp}.sql"
 
 function setup() {
-  if [ ! -d "${backup_dir}" ]; then
+  if [ ! -d ${backup_dir} ]; then
     echo "Creating ${backup_dir}"
     mkdir -p ${backup_dir}
   fi
