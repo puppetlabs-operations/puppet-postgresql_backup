@@ -57,8 +57,8 @@ define postgresql_backup::db (
 
   if ! defined(Concat::Fragment['postgresql_backup header']) {
     concat::fragment { 'postgresql_backup header':
-      target  => $postgresql_backup::db::pgpass,
-      content => "Puppet managed postgresql_backups. Changes made to this file will not be saved\n\n",
+      target  => $pgpass,
+      content => 'Puppet managed postgresql_backups. Changes made to this file will not be saved\n',
       order   => '1'
     }
   }
