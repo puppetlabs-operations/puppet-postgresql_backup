@@ -22,13 +22,11 @@ define postgresql_backup::db (
   $confdir     = '/etc/postgresql/9.3/main/backup'
 ) {
 
-  if ! defined(File[$confdir]) {
-    file { $confdir:
-      ensure => directory,
-      owner  => $owner,
-      group  => $group,
-      before => File["/usr/local/bin/${title}_backup"]
-    }
+  file { $confdir:
+    ensure => directory,
+    owner  => $owner,
+    group  => $group,
+    before => File["/usr/local/bin/${title}_backup"]
   }
 
   if ! defined(Concat[$pgpass]) {
