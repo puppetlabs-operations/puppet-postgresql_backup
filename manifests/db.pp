@@ -19,11 +19,12 @@ define postgresql_backup::db (
   $owner       = 'root',
   $ensure      = present,
   $pgpass      = '/root/.pgpass',
-  $confdir     = '/etc/postgresql/9.3/main/backup'
+  $confdir     = '/etc/postgresql/9.3/main/backup',
+  $backup_dir  = '/var/lib/postgresql/backups'
 ) {
 
   if ! defined(File[$confdir]) {
-    file { $confdir:
+    file { [ $confdir, $backup_dir ]:
       ensure => directory,
       owner  => $owner,
       group  => $group,
@@ -47,12 +48,13 @@ define postgresql_backup::db (
     content => template('postgresql_backup/postgresql_backup.erb')
   } ->
 
-  file { "/etc/postgresql/9.3/main/backup/${title}_backup.conf":
+  file { "${confdir}/${title}_backup.conf":
     ensure  => $ensure,
     group   => $group,
     owner   => $owner,
     mode    => '0600',
-    content => template('postgresql_backup/postgresql_backup.conf.erb')
+    content => template('postgresql_backup/postgresql_backup.conf.erb'),
+    require => File[$confdir]
   }
 
   if ! defined(Concat::Fragment['postgresql_backup header']) {
