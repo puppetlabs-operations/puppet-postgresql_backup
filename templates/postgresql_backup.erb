@@ -1,6 +1,6 @@
 #!/bin/bash
 
-confdir='/etc/postgresql/9.3/main/backup'
+confdir="<%= @confdir %>"
 config_file="${confdir}/<%= @name %>_backup.conf"
 timestamp=$(date +'%Y-%m-%d-%H-%M')
 
