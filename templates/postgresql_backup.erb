@@ -11,7 +11,11 @@ else
   exit 1
 fi
 
+<% if @compress %>
+database_dump_output="${backup_path}/<%= @name %>-database-backup-${timestamp}.sql.gz"
+<% else %>
 database_dump_output="${backup_path}/<%= @name %>-database-backup-${timestamp}.sql"
+<% end %>
 
 function setup() {
   if [ ! -d ${backup_dir} ]; then
@@ -22,7 +26,11 @@ function setup() {
 
 function backup_database() {
   echo "Backing up <%= @name %> database"
+  <% if @compress %>
+  /usr/bin/pg_dump -U "${db_user}" "${db_name}" -h "${db_host}" | nice -n20 gzip --rsyncable > "${database_dump_output}"
+  <% else %>
   /usr/bin/pg_dump -U "${db_user}" "${db_name}" -h "${db_host}" -f "${database_dump_output}"
+  <% end %>
   echo "Created ${database_dump_output}"
 }
 
