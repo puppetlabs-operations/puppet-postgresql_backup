@@ -18,6 +18,7 @@ define postgresql_backup::db (
   $group       = 'root',
   $owner       = 'root',
   $ensure      = present,
+  $compress    = true,
   $pgpass      = '/root/.pgpass',
   $confdir     = '/etc/postgresql/9.3/main/backup',
   $backup_dir  = '/var/lib/postgresql/backups'
